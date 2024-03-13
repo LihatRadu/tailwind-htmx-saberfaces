@@ -1,0 +1,13 @@
+<script src="https://unpkg.com/htmx.org@1.9.10"></script>
+<h1 class="text-7xl text-center font-bold text-blue-700">{{.message}}</h1>
+
+<button type="button" hx-post="/sabers" hx-trigger='click'>Sabers</button>
+
+{{range .sabers}}
+  <div class="card bg-base-100 shadow-xl">
+    <div class="card-body">
+      <h2 class="card-title">{{.Name}}</h2>
+      <p>{{.Description}}</p>
+    </div>
+  </div>
+{{end}}
