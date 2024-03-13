@@ -77,6 +77,15 @@ func Saberfaces() {
       Stats: "Saber Stats",
       NoblePhantasm: "X Noble Phantasm",
     },
+    Saber{ 
+      Name: "Artoria Alter(Salter)",
+      Class: "Saber",
+      Level: 2,
+      Description: "Salter Description",
+      Image: "../assets/saber_alter.png",
+      Stats: "Saber Stats",
+      NoblePhantasm: "Excalibur Noble Phantasm",
+    },
   }
 }
 
