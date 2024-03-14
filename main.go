@@ -30,7 +30,10 @@ func main()  {
     //return c.SendString("Hello Sabers!")
     return c.Render("sabers", fiber.Map{"message":"Saber List"})
   })
-
+  app.Post("/sabers", func (c *fiber.Ctx) error {
+     
+    return c.Render("sabers", fiber.Map{"message":"Saber List"})
+  })
   app.Get("/sabersfaces", func (c *fiber.Ctx) error {
     //return c.SendString("Hello Sabers!")
     return c.Render("sabers", fiber.Map{"":""})

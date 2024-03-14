@@ -1,7 +1,7 @@
 <script src="https://unpkg.com/htmx.org@1.9.10"></script>
 <h1 class="text-7xl text-center font-bold text-blue-700">{{.message}}</h1>
-
-<button type="button" hx-post="/sabers" hx-trigger='click'>Sabers</button>
+{{.sabersData}}
+<button type="button" hx-target='body' hx-get="/sabers" hx-post="/sabersData" >Sabers</button>
 
 {{range .sabers}}
   <div class="card bg-base-100 shadow-xl">
