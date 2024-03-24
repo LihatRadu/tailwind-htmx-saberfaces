@@ -16,7 +16,7 @@
   </div>
   <div class="flex-none">
     <ul class="menu menu-horizontal px-1">
-      <li><a class="font-bold" hx-get="/sabers">Sabers</a></li>
+      <li><a class="font-bold" >Sabers</a></li>
     </ul>
   </div>
 </div>
@@ -42,6 +42,7 @@
       <span class="text-red-700 text-2xl text-bold">{{.message}}</span>
     </div>
 {{range .sabers}}
+<div id="sabersList" hx-swap="outerHTML">
   <div class="card bg-base-100 shadow-xl">
     <div class="card-body">
       <h2 class="card-title">{{.Name}}</h2>
@@ -49,7 +50,8 @@
       <p>Class: {{.Class}}</p>
       <p>Description: {{.Description}}</p>
     </div>
-  </div>
+</div>
 {{end}}
+</div>
   </body>
 </html>

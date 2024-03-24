@@ -1,13 +1,16 @@
 <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+<script src="anime.min.js"></script>
 <h1 class="text-7xl text-center font-bold text-blue-700">{{.message}}</h1>
-{{.sabersData}}
-<button type="button" hx-target='body' hx-get="/sabers" hx-post="/sabersData" >Sabers</button>
 
+<button type="button" hx-target='body' hx-get="/sabersData"  hx-trigger='click' hx-target="#sabersList">Sabers</button>
+
+<div id="sabersList" hx-swap="outerHTML">
 {{range .sabers}}
   <div class="card bg-base-100 shadow-xl">
     <div class="card-body">
       <h2 class="card-title">{{.Name}}</h2>
       <p>{{.Description}}</p>
     </div>
-  </div>
+    </div>
 {{end}}
+</div>

@@ -1,6 +1,7 @@
 package sabers
 
 type Saber struct {
+  ID int
   Name string
   Class string
   Level int
@@ -15,6 +16,7 @@ var sabers []Saber
 func Saberfaces() {
   sabers = []Saber{
     Saber{
+      ID: 1,
       Name: "Artoria Pendragon",
       Class: "Saber",
       Level: 1,
@@ -24,6 +26,7 @@ func Saberfaces() {
       NoblePhantasm: "Saber Noble Phantasm",
     },
     Saber{ 
+      ID: 2,
       Name: "Okita Souji",
       Class: "Saber",
       Level: 2,
@@ -33,6 +36,7 @@ func Saberfaces() {
       NoblePhantasm: "Okita Noble Phantasm",
     },
     Saber{ 
+      ID: 3,
       Name: "Nero Claudius",
       Class: "Saber",
       Level: 2,
@@ -42,6 +46,7 @@ func Saberfaces() {
       NoblePhantasm: "Nero Noble Phantasm",
     },
     Saber{ 
+      ID: 4,
       Name: "Yamato Takeru",
       Class: "Saber",
       Level: 2,
@@ -51,6 +56,7 @@ func Saberfaces() {
       NoblePhantasm: "Takeru Noble Phantasm",
     },
     Saber{ 
+      ID: 5,
       Name: "Mordred",
       Class: "Saber",
       Level: 2,
@@ -60,6 +66,7 @@ func Saberfaces() {
       NoblePhantasm: "Mordred Noble Phantasm",
     },
     Saber{ 
+      ID: 6,
       Name: "Morgan la Faye",
       Class: "Berserker",
       Level: 2,
@@ -69,6 +76,7 @@ func Saberfaces() {
       NoblePhantasm: "Morgan Noble Phantasm",
     },
     Saber{ 
+      ID: 7,
       Name: "Heroine X",
       Class: "Assassin",
       Level: 2,
@@ -78,6 +86,7 @@ func Saberfaces() {
       NoblePhantasm: "X Noble Phantasm",
     },
     Saber{ 
+      ID: 8,
       Name: "Artoria Alter(Salter)",
       Class: "Saber",
       Level: 2,

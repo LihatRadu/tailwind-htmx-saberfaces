@@ -3,6 +3,7 @@ package main
 import (
 	//"saberfaces/sabers"
 	"saberfaces/sabers"
+  //"encoding/json"
 //	"tailwind-htmx-saberfaces/sabers"
 
 	"github.com/gofiber/fiber/v2"
@@ -25,10 +26,14 @@ func main()  {
     }
     return c.Render("index", sabersData)
   })
-
+  
   app.Get("/sabers", func (c *fiber.Ctx) error {
     //return c.SendString("Hello Sabers!")
-    return c.Render("sabers", fiber.Map{"message":"Saber List"})
+    sabersData := map[string][]sabers.Saber{
+     "sabers": sabers.GetSabers(),
+    }
+   // return c.Render("sabers", fiber.Map{"message":"Saber List"})
+    return c.Render("sabers", sabersData)
   })
   app.Post("/sabers", func (c *fiber.Ctx) error {
      
