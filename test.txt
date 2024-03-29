@@ -1,0 +1,178 @@
+package main
+
+import (
+	"encoding/json"
+	"errors"
+	"fmt"
+	"net/http"
+
+	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/template/html/v2"
+)
+
+type Character struct{
+  ID string `json:"id"`
+
+  Name string `json:"name"`
+  
+  Element string `json:"element"`
+  
+  Rarity int `json:"rarity"`
+
+  Image string `json:"image"`
+}
+
+func fetchDataApi(apiUrl string) ([]Character, error)  {
+ resp, err := http.Get(apiUrl)
+    if err != nil {
+        return nil, err
+    }
+    defer resp.Body.Close()
+
+    // Decode the JSON response into a map
+    var response map[string]interface{}
+    err = json.NewDecoder(resp.Body).Decode(&response)
+    if err != nil {
+        return nil, err
+    }
+    fmt.Println(response)
+    // Extract character data from the response
+    charactersData, ok := response["data"].([]interface{})
+    if !ok {
+        return nil, errors.New("characters key not found in JSON response")
+    }
+
+    // Convert character data into []Character
+    var characters []Character
+    for _, data := range charactersData {
+        characterData, ok := data.(map[string]interface{})
+        if !ok {
+            return nil, errors.New("invalid character data found in JSON response")
+        }
+
+        // Create a Character object and append it to the characters slice
+        character := Character{
+            ID:      characterData["id"].(string),
+            Name:    characterData["name"].(string),
+            Element: characterData["element"].(string),
+            Rarity:  int(characterData["rarity"].(float64)), // JSON numbers are unmarshaled as float64
+            Image:   characterData["image"].(string),
+        }
+        characters = append(characters, character)
+    }
+
+    return characters, nil
+}
+
+func main()  {
+  println("Paimon: Hello, World!")
+
+  app := fiber.New(fiber.Config{
+    Views: html.New("./templates/", ".html"),
+   // ViewsLayout: "layouts",
+  })
+
+  app.Get("/", func(c *fiber.Ctx) error {
+    characters, err := fetchDataApi("https://genshin.jmp.blue/")
+
+    if err != nil {
+      return err
+    }
+
+    return c.Render("index", fiber.Map{
+      "Characters": characters,
+    })
+  })
+  app.Listen(":3000")
+}
+
+----------------------------------------------V2-----------------------------------------------------
+package main
+
+import (
+	"encoding/json"
+	"errors"
+	"net/http"
+  "fmt"
+	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/template/html/v2"
+)
+
+type Character struct {
+	ID      string `json:"id"`
+	Name    string `json:"name"`
+	Element string `json:"element"`
+	Rarity  int    `json:"rarity"`
+	Image   string `json:"image"`
+}
+
+type APIResponse struct {
+	Data []Character `json:"data"`
+}
+
+func fetchDataApi(apiUrl string) ([]Character, error) {
+	resp, err := http.Get(apiUrl)
+    if err != nil {
+        return nil, err
+    }
+    defer resp.Body.Close()
+
+    // Decode the JSON response into a map
+    var response map[string]interface{}
+    err = json.NewDecoder(resp.Body).Decode(&response)
+    if err != nil {
+        return nil, err
+    }
+
+    // Log the entire response for debugging purposes
+    fmt.Println(response)
+
+    // Extract character data from the response
+    charactersData, ok := response["characters"].([]interface{})
+    if !ok {
+        return nil, errors.New("characters key not found in JSON response")
+    }
+
+    // Convert character data into []Character
+    var characters []Character
+    for _, data := range charactersData {
+        characterData, ok := data.(map[string]interface{})
+        if !ok {
+            return nil, errors.New("invalid character data found in JSON response")
+        }
+
+        // Create a Character object and append it to the characters slice
+        character := Character{
+            ID:      characterData["id"].(string),
+            Name:    characterData["name"].(string),
+            Element: characterData["element"].(string),
+            Rarity:  int(characterData["rarity"].(float64)), // JSON numbers are unmarshaled as float64
+            Image:   characterData["image"].(string),
+        }
+        characters = append(characters, character)
+    }
+
+    return characters, nil
+}
+
+func main() {
+	println("Paimon: Hello, World!")
+
+	app := fiber.New(fiber.Config{
+		Views: html.New("./templates/", ".html"),
+		// ViewsLayout: "layouts",
+	})
+
+	app.Get("/", func(c *fiber.Ctx) error {
+		characters, err := fetchDataApi("https://genshin.jmp.blue/")
+		if err != nil {
+			return err
+		}
+
+		return c.Render("index", fiber.Map{
+			"Characters": characters,
+		})
+	})
+
+	app.Listen(":3000")
+}
